@@ -1,3 +1,4 @@
+/* eslint-disable import/default */
 import app from './app';
 
 const port = process.env.PORT || 1234;
