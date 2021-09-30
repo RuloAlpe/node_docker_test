@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable class-methods-use-this */
 import * as db from '../config/db.config';
 import Task from '../models/task.model';
@@ -44,4 +45,4 @@ class TaskRepository {
   }
 }
 
-export default TaskRepository;
+module.exports = new TaskRepository();

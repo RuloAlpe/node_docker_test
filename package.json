@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "local": "nodemon --exec babel-node src/index.js",
-    "start": "node src/index.js",
+    "start": "nodemon --exec babel-node src/index.js",
     "build": "babel ./src -d dist --ignore node_modules",
     "lint": "eslint ./src",
     "test": "jest --config ./jest.config.json",
@@ -25,6 +25,7 @@
     "@types/jest": "^26.0.5",
     "babel-eslint": "^10.1.0",
     "eslint": "^7.5.0",
+    "eslint-plugin-react": "^7.26.1",
     "jest": "^26.1.0",
     "nodemon": "^2.0.13"
   },

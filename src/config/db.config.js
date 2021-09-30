@@ -1,13 +1,21 @@
+/* eslint-disable no-console */
 import mongoose from 'mongoose';
 
+const {
+  MONGODB_USER,
+  MONGODB_PASSWORD,
+  MONGODB_HOST,
+  MONGODB_DOCKER_PORT,
+  MONGODB_DATABASE,
+} = process.env;
+
 const connect = () => {
-  const url = process.env.MONGO_CONNECTION_STRING;
+  const url = 
+    `mongodb://${MONGODB_USER}:${MONGODB_PASSWORD}@${MONGODB_HOST}
+    :${MONGODB_DOCKER_PORT}/${MONGODB_DATABASE}?authSource=admin`;
 
   mongoose.connect(url, {
     useNewUrlParser: true,
-    useFindAndModify: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
   });
 
   mongoose.connection.once('open', async () => {
