@@ -1,6 +1,6 @@
 /* eslint-disable class-methods-use-this */
 import * as db from '../config/db.config';
-import Task from '../model/task.model';
+import Task from '../models/task.model';
 
 class TaskRepository {
   constructor() {

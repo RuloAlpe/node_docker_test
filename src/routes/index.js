@@ -1,7 +1,8 @@
-// import express from 'express';
-// import v1 from './v1.0';
-// const router = express.Router();
+import express from 'express';
+import v1 from './v1';
 
-// router.use('/v1', v1);
+const router = express.Router();
 
-// export default router;
+router.use('/v1', v1);
+
+export default router;

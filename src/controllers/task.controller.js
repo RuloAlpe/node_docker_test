@@ -1,4 +1,4 @@
-import taskService from '../service/task.service';
+import taskService from '../services/task.service';
 
 const getTasks = async () => {
   console.log('Controller: getTasks');
