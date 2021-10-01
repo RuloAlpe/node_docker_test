@@ -1,48 +1,42 @@
 /* eslint-disable no-console */
-/* eslint-disable class-methods-use-this */
-import * as db from '../config/db.config';
-import Task from '../models/task.model';
+import { taskModel } from '../models/task.model';
 
-class TaskRepository {
-  constructor() {
-    db.connect();
+const getTasksRepository = async () => {
+  const tasks = await taskModel.find({});
+  console.log('tasks:::', tasks);
+  return tasks;
+};
+
+const createTaskRepository = async (task) => {
+  let data = {};
+  try {
+    data = await taskModel.create(task);
+  } catch (err) {
+    console.error(`Error::${err}`);
   }
+  return data;
+};
 
-  async getTasks() {
-    const tasks = await Task.find({});
-    console.log('tasks:::', tasks);
-    return tasks;
+const updateTaskRepository = async (task) => {
+  let data = {};
+  try {
+    data = await taskModel.updateOne(task);
+  } catch (err) {
+    console.error(`Error::${err}`);
   }
+  return data;
+};
 
-  async createTask(task) {
-    let data = {};
-    try {
-      data = await Task.create(task);
-    } catch (err) {
-      console.error(`Error::${err}`);
-    }
-    return data;
+const deleteTaskRepository = async (taskId) => {
+  let data = {};
+  try {
+    data = await taskModel.deleteOne({ _id: taskId });
+  } catch (err) {
+    console.error(`Error::${err}`);
   }
+  return { status: `${data.deletedCount > 0}` };
+};
 
-  async updateTask(task) {
-    let data = {};
-    try {
-      data = await Task.updateOne(task);
-    } catch (err) {
-      console.error(`Error::${err}`);
-    }
-    return data;
-  }
-
-  async deleteTask(taskId) {
-    let data = {};
-    try {
-      data = await Task.deleteOne({ _id: taskId });
-    } catch (err) {
-      console.error(`Error::${err}`);
-    }
-    return { status: `${data.deletedCount > 0}` };
-  }
-}
-
-module.exports = new TaskRepository();
+export {
+  getTasksRepository, createTaskRepository, updateTaskRepository, deleteTaskRepository,
+};

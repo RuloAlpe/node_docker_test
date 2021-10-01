@@ -2,44 +2,57 @@
 import mongoose from 'mongoose';
 
 const {
-  MONGODB_USER,
-  MONGODB_PASSWORD,
-  MONGODB_HOST,
-  MONGODB_DOCKER_PORT,
-  MONGODB_DATABASE,
+  // DB_USER,
+  // DB_PASSWORD,
+  DB_HOST,
+  // DB_DOCKER_PORT,
+  DB_DATABASE,
 } = process.env;
 
-const connect = () => {
-  const url = 
-    `mongodb://${MONGODB_USER}:${MONGODB_PASSWORD}@${MONGODB_HOST}
-    :${MONGODB_DOCKER_PORT}/${MONGODB_DATABASE}?authSource=admin`;
+mongoose.Promise = Promise;
 
-  mongoose.connect(url, {
-    useNewUrlParser: true,
-  });
-
-  mongoose.connection.once('open', async () => {
-    console.log('Connected to database');
-  });
-
-  mongoose.connection.on('error', (err) => {
-    console.error('Error connecting to database  ', err);
+const connectToDb = () => {
+  return new Promise((resolve, reject) => {
+    mongoose.connect(
+      `mongodb://${DB_HOST}/${DB_DATABASE}`,
+      {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      },
+    ).then(() => resolve(DB_DATABASE))
+      .catch(err => reject(err));
   });
 };
 
-const disconnect = () => {
-  if (!mongoose.connection) {
-    return;
-  }
+export default connectToDb;
 
-  mongoose.disconnect();
 
-  mongoose.once('close', async () => {
-    console.log('Diconnected  to database');
-  });
-};
+// mongoose.connection.on('connected', () => {
+//   console.log('MongoDB Connection Established');
+// });
 
-export {
-  connect,
-  disconnect,
-};
+// mongoose.connection.on('reconnected', () => {
+//   console.log('MongoDB Connection Reestablished');
+// });
+
+// mongoose.connection.on('disconnected', () => {
+//   console.log('MongoDB Connection Disconnected');
+// });
+
+// mongoose.connection.on('close', () => {
+//   console.log('MongoDB Connection Closed');
+// });
+
+// mongoose.connection.on('error', error => {
+//   console.log('MongoDB ERROR: ' + error);
+//   process.exit(1);
+// });
+
+// const connectMongo = async () => {
+//   let connectionuri = `mongodb://${MONGODB_HOST}/${MONGODB_DATABASE}`;
+//   await mongoose.connect(connectionuri, {
+//     useNewUrlParser: true,
+//   });
+// };
+
+// export default connectMongo;
